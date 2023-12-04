@@ -11,18 +11,15 @@ import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 import org.bukkit.plugin.Plugin;
-import org.slf4j.Logger;
 
-public final class Messages {
+public final class LocalizedMessages {
 	private static final String BASE_NAME = "messages";
 	private static final String EXTENSION = "properties";
 	private final Plugin plugin;
 	private URLClassLoader classloader;
-	private Logger logger;
 
-	public Messages(Plugin plugin, Logger logger) {
+	public LocalizedMessages(Plugin plugin) {
 		this.plugin = plugin;
-		this.logger = logger;
 
 		this.saveLocaleFiles(new String[] {""});
 		
@@ -68,7 +65,7 @@ public final class Messages {
 		try {
 			return ResourceBundle.getBundle(BASE_NAME, locale, this.classloader).getString(entry.toLowerCase());
 		} catch (MissingResourceException e) {
-			this.logger.warn("Couldn't find message: %s".formatted(e.getKey()));
+			this.plugin.getSLF4JLogger().warn("Couldn't find message: %s".formatted(e.getKey()));
 			return "<not found: %s>".formatted(e.getKey());
 		}
 	}
