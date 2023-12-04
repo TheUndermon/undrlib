@@ -57,11 +57,11 @@ public class LocalizedMessages {
 		return (locale.isBlank()) ? "%s.%s".formatted(BASE_NAME, EXTENSION) : "%s_%s.%s".formatted(BASE_NAME, locale, EXTENSION); 
 	}
 
-	public void reload() {
+	public final void reload() {
 		this.classloader = getClassloader();
 	}
 
-	public String get(String entry, Locale locale) {
+	public final String get(String entry, Locale locale) {
 		try {
 			return ResourceBundle.getBundle(BASE_NAME, locale, this.classloader).getString(entry.toLowerCase());
 		} catch (MissingResourceException e) {
