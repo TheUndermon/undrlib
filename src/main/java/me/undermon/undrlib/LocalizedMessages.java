@@ -12,7 +12,7 @@ import java.util.ResourceBundle;
 
 import org.bukkit.plugin.Plugin;
 
-public final class LocalizedMessages {
+public class LocalizedMessages {
 	private static final String BASE_NAME = "messages";
 	private static final String EXTENSION = "properties";
 	private final Plugin plugin;
