@@ -6,6 +6,7 @@ import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
@@ -18,26 +19,23 @@ public class LocalizedMessages {
 	private final Plugin plugin;
 	private URLClassLoader classloader;
 
-	public LocalizedMessages(Plugin plugin) {
+	public LocalizedMessages(Plugin plugin, List<Locale> locales) {
 		this.plugin = plugin;
 
-		this.saveLocaleFiles(new String[] {""});
-		
+		this.saveToDataFolderIfAbsent("%s.%s".formatted(BASE_NAME, EXTENSION));
+
+		for (Locale locale : locales) {
+			this.saveToDataFolderIfAbsent("%s_%s.%s".formatted(BASE_NAME, locale, EXTENSION));
+		}
+
 		this.classloader = getClassloader();
 	}
 
-	private void saveLocaleFiles(String[] locales) {
-		for (String locale : locales) {
-			this.saveToDataFolderIfNotPresent(locale);
-		}
-	}
-
-	private void saveToDataFolderIfNotPresent(String locale) {
-		String localeFile = getLocaleFileName(locale);
-		Path filePath = Paths.get(this.plugin.getDataFolder().getAbsolutePath(), localeFile);
+	private void saveToDataFolderIfAbsent(String file) {
+		Path filePath = Paths.get(this.plugin.getDataFolder().getAbsolutePath(), file);
 		
 		if (!Files.exists(filePath)) {
-			this.plugin.saveResource(localeFile, false);
+			this.plugin.saveResource(file, false);
 		}
 	}
 
@@ -51,10 +49,6 @@ public class LocalizedMessages {
 		}
 
 		return new URLClassLoader(urls);
-	}
-
-	private String getLocaleFileName(String locale) {
-		return (locale.isBlank()) ? "%s.%s".formatted(BASE_NAME, EXTENSION) : "%s_%s.%s".formatted(BASE_NAME, locale, EXTENSION); 
 	}
 
 	public final void reload() {
