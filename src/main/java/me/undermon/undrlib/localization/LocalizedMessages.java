@@ -1,4 +1,4 @@
-package me.undermon.undrlib;
+package me.undermon.undrlib.localization;
 
 import java.net.MalformedURLException;
 import java.net.URL;
