@@ -5,7 +5,7 @@ xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xs
 
 <groupId>me.undermon</groupId>
 <artifactId>undrlib</artifactId>
-<version>0.1.0</version>
+<version>24.3.9</version>
 
 <properties>
 	<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
