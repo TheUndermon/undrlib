@@ -14,7 +14,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import me.undermon.undrlib.commands.Command;
-import me.undermon.undrlib.commands.Inputs;
+import me.undermon.undrlib.commands.Input;
 
 class CommandTest {
 
@@ -41,7 +41,7 @@ class CommandTest {
 	void exceptionIfNameIsNull() {
 		assertThrows(IllegalArgumentException.class, () -> new Command(null) {
 			@Override
-			protected void onCommand(CommandSender sender, Inputs arguments) {
+			protected void onCommand(CommandSender sender, Input arguments) {
 				throw new UnsupportedOperationException("Unimplemented method 'onCommand'");
 			}
 		});

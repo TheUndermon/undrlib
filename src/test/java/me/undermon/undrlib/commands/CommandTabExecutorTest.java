@@ -8,14 +8,14 @@ import org.junit.jupiter.api.Test;
 
 import me.undermon.undrlib.commands.Command;
 import me.undermon.undrlib.commands.CommandTabExecutor;
-import me.undermon.undrlib.commands.Inputs;
+import me.undermon.undrlib.commands.Input;
 
 class CommandTabExecutorTest {
 	private CommandTabExecutor tabExecutor;
 	
 	private static final Command SUBCOMMAND = new Command("mySubcommand") {
 		@Override
-		protected void onCommand(CommandSender sender, Inputs arguments) {
+		protected void onCommand(CommandSender sender, Input arguments) {
 			throw new UnsupportedOperationException("Unimplemented method 'onCommand'");
 		}
 	};

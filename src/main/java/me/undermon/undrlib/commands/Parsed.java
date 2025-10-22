@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 
-final class Parsed implements Inputs {
+final class Parsed implements Input {
 	
 	private Map<String, String> positionals = new HashMap<>();
 	private Map<String, String> flags = new HashMap<>();

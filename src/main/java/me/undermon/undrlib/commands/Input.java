@@ -9,7 +9,7 @@ package me.undermon.undrlib.commands;
 import java.util.Collection;
 import java.util.Optional;
 
-public interface Inputs {
+public interface Input {
 
 	public Optional<String> getPositional(String name);
 

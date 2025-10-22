@@ -9,7 +9,7 @@ final class CommandDummy extends Command {
 	}
 
 	@Override
-	protected void onCommand(CommandSender sender, Inputs arguments) {
+	protected void onCommand(CommandSender sender, Input arguments) {
 		throw new UnsupportedOperationException("Unimplemented method 'onCommand'");
 	}
 	

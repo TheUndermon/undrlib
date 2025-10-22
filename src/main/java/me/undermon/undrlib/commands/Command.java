@@ -196,6 +196,6 @@ public abstract class Command {
 		this.onCommand(sender, this.parser.parse(Arrays.asList(arguments)));
 	}
 
-	protected abstract void onCommand(CommandSender sender, Inputs arguments);
+	protected abstract void onCommand(CommandSender sender, Input arguments);
 
 }
