@@ -33,14 +33,7 @@ class CommandTabExecutorTest {
 
 	@Test
 	void exceptionAddSubcommandWithNullSubcommandArgumentOverloaded() {
-		assertThrows(IllegalArgumentException.class, () -> this.tabExecutor.add(null, sender -> true));
-	}
-
-	@Test
-	void exceptionAddSubcommandWithNullAvailabilityArgumentOverloaded() {
-		assertThrows(IllegalArgumentException.class, () -> {
-			this.tabExecutor.add(SUBCOMMAND, null);
-		});
+		assertThrows(IllegalArgumentException.class, () -> this.tabExecutor.add(null));
 	}
 
 	@Test
@@ -48,7 +41,7 @@ class CommandTabExecutorTest {
 		this.tabExecutor.add(SUBCOMMAND);
 
 		assertThrows(IllegalArgumentException.class, () -> {
-			this.tabExecutor.add(SUBCOMMAND, null);
+			this.tabExecutor.add(SUBCOMMAND);
 		});
 	}
 
@@ -60,13 +53,7 @@ class CommandTabExecutorTest {
 	@Test
 	void exceptionSetDefaultSubcommandWithNullSubcommandArgumentOverloaded() {
 		assertThrows(IllegalArgumentException.class,
-			() -> this.tabExecutor.setDefault(null, sender -> true));
+			() -> this.tabExecutor.setDefault(null));
 	}
 
-	@Test
-	void exceptionSetDefaultSubcommandWithNullAvailabilityArgumentOverloaded() {	
-		assertThrows(IllegalArgumentException.class, () -> {
-			this.tabExecutor.setDefault(SUBCOMMAND, null);
-		});
-	}
 }

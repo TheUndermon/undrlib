@@ -196,6 +196,10 @@ public abstract class Command {
 		this.onCommand(sender, this.parser.parse(Arrays.asList(arguments)));
 	}
 
+	public boolean predicate(CommandSender sender) {
+		return true;
+	}
+
 	protected abstract void onCommand(CommandSender sender, Input arguments);
 
 }
