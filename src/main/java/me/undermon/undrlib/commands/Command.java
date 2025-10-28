@@ -279,6 +279,21 @@ public abstract class Command implements TabExecutor {
 		return Stream.of(args).skip(1).toArray(String[]::new);
 	}
 
+	public void register(JavaPlugin plugin) {
+		var command = plugin.getCommand(this.getName());
+
+		if (command == null) {
+			plugin.getLogger().warning(
+				"Failed to register command '%s' because it's not defined in plugin.yml".formatted(this.getName())
+			);
+
+			return;
+		}
+		
+		command.setExecutor(this);
+		command.setTabCompleter(this);
+	}
+
 	protected abstract void onCommand(CommandSender sender, Input arguments);
 
 }
