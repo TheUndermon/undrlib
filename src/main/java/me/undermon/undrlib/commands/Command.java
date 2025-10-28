@@ -17,14 +17,17 @@ import java.util.function.Function;
 import java.util.stream.Stream;
 
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
+import org.bukkit.plugin.java.JavaPlugin;
 
-public abstract class Command {
+public abstract class Command implements TabExecutor {
 	private static final String ARGUMENTS_ARRAY_CANNOT_BE_NULL = "arguments array cannot be null";
 	private static final String COMMAND_SENDER_CANNOT_BE_NULL = "CommandSender cannot be null";
 	private static final String PARAMETER_NAME_MUST_BE_UNIQUE = "parameter name must be unique";
 	private static final String PARAMETER_SUGGESTER_CANNOT_BE_NULL = "parameter suggester cannot be null";
 	private static final String PARAMETER_AVAILABILITY_CANNOT_BE_NULL = "parameter availability cannot be null";
 	private static final String PARAMETER_NAME_CANNOT_BE_NULL = "parameter name cannot be null";
+	private static final String SUBCOMMAND_CANNOT_BE_NULL = "subcommand cannot be null";
 
 	private String name;
 	private Parameters parameters = new Parameters();
@@ -198,6 +201,82 @@ public abstract class Command {
 
 	public boolean predicate(CommandSender sender) {
 		return true;
+	}
+
+	private Map<String, Command> commands = new HashMap<>();
+
+	protected void add(Command command) {
+		if (command == null) {
+			throw new IllegalArgumentException(SUBCOMMAND_CANNOT_BE_NULL);
+		}
+
+		String name = command.getName();
+
+		if (this.commands.containsKey(name)) {
+			throw new IllegalArgumentException("Duplicated subcommand name: " + name);
+		}
+
+		this.commands.put(name, command);
+	}
+
+	@Override
+	public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+		String firstElement = args[0];
+
+		if (this.commands.containsKey(firstElement) && args.length > 1 && this.commands.get(firstElement).predicate(sender)) {
+			return this.commands.get(firstElement).getCompletition(sender, skipFirstElementOf(args));
+		}
+
+		List<String> completitions = new ArrayList<>();
+
+		// if (this.defaultCommand.predicate(sender)) {
+			completitions.addAll(this.getCompletition(sender, args));
+		// }
+
+		if (args.length <= 1) {
+			completitions.addAll(
+				this.commands.keySet().stream().
+				filter(entry -> this.commands.get(entry).predicate(sender)).
+				toList()
+			);
+		}
+
+		completitions.removeIf(entry -> !entry.toLowerCase().startsWith(args[args.length - 1].toLowerCase()));
+
+		return completitions; 
+
+
+		// if (args.length > 1) {
+		// 	return List.of();
+		// } else {
+		// 	return this.commands.keySet().stream().
+		// 		filter(arg -> this.commands.get(arg).predicate(sender)).
+		// 		filter(arg -> arg.toLowerCase().startsWith(firstElement)).
+		// 		toList();
+		// }
+	}
+
+	@Override
+	public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+		String subcommand = (args.length > 0) ? args[0] : "";
+
+		if (this.commands.containsKey(subcommand) && this.commands.get(subcommand).predicate(sender)) {
+			this.commands.get(subcommand).execute(sender, skipFirstElementOf(args));
+
+			return true;
+		}
+
+		if (this.predicate(sender)) {
+			this.execute(sender, args);
+			
+			return true;
+		}
+
+		return true;
+	}
+
+	private static String[] skipFirstElementOf(String[] args) {
+		return Stream.of(args).skip(1).toArray(String[]::new);
 	}
 
 	protected abstract void onCommand(CommandSender sender, Input arguments);
