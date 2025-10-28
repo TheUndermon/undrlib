@@ -13,9 +13,6 @@ import org.bukkit.command.CommandSender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import me.undermon.undrlib.commands.Command;
-import me.undermon.undrlib.commands.Input;
-
 class CommandTest {
 
 	private static final CommandSenderDummy SENDER_DUMMY = new CommandSenderDummy();

@@ -8,8 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import me.undermon.undrlib.commands.CommandTabExecutor;
-
 final class CommandTabExecutorTabCompleteTest {
 	private static final CommandSender SENDER_DUMMY = new CommandSenderDummy();
 	private CommandTabExecutor tabExecutor;

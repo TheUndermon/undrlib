@@ -9,10 +9,6 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import me.undermon.undrlib.commands.Parameters;
-import me.undermon.undrlib.commands.Parsed;
-import me.undermon.undrlib.commands.Parser;
-
 class ParsedTest {
 
 	@Test

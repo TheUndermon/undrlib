@@ -6,10 +6,6 @@ import org.bukkit.command.CommandSender;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import me.undermon.undrlib.commands.Command;
-import me.undermon.undrlib.commands.CommandTabExecutor;
-import me.undermon.undrlib.commands.Input;
-
 class CommandTabExecutorTest {
 	private CommandTabExecutor tabExecutor;
 	

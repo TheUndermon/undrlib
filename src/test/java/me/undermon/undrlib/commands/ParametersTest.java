@@ -9,8 +9,6 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import me.undermon.undrlib.commands.Parameters;
-
 class ParametersTest {
 	private static final String SWITCH = "mySwitch";
 	private static final String POSITIONAL = "myPositional";
