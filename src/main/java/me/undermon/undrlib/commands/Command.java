@@ -229,9 +229,7 @@ public abstract class Command implements TabExecutor {
 
 		List<String> completitions = new ArrayList<>();
 
-		// if (this.defaultCommand.predicate(sender)) {
-			completitions.addAll(this.getCompletition(sender, args));
-		// }
+		completitions.addAll(this.getCompletition(sender, args));
 
 		if (args.length <= 1) {
 			completitions.addAll(
@@ -244,16 +242,6 @@ public abstract class Command implements TabExecutor {
 		completitions.removeIf(entry -> !entry.toLowerCase().startsWith(args[args.length - 1].toLowerCase()));
 
 		return completitions; 
-
-
-		// if (args.length > 1) {
-		// 	return List.of();
-		// } else {
-		// 	return this.commands.keySet().stream().
-		// 		filter(arg -> this.commands.get(arg).predicate(sender)).
-		// 		filter(arg -> arg.toLowerCase().startsWith(firstElement)).
-		// 		toList();
-		// }
 	}
 
 	@Override
