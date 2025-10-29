@@ -205,7 +205,7 @@ public abstract class Command implements TabExecutor {
 
 	private Map<String, Command> commands = new HashMap<>();
 
-	protected final void add(Command command) {
+	protected final void addCommand(Command command) {
 		if (command == null) {
 			throw new IllegalArgumentException(SUBCOMMAND_CANNOT_BE_NULL);
 		}
