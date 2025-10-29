@@ -205,7 +205,7 @@ public abstract class Command implements TabExecutor {
 
 	private Map<String, Command> commands = new HashMap<>();
 
-	protected void add(Command command) {
+	protected final void add(Command command) {
 		if (command == null) {
 			throw new IllegalArgumentException(SUBCOMMAND_CANNOT_BE_NULL);
 		}
@@ -220,7 +220,7 @@ public abstract class Command implements TabExecutor {
 	}
 
 	@Override
-	public List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+	public final List<String> onTabComplete(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 		String firstElement = args[0];
 
 		if (this.commands.containsKey(firstElement) && args.length > 1 && this.commands.get(firstElement).predicate(sender)) {
@@ -245,7 +245,7 @@ public abstract class Command implements TabExecutor {
 	}
 
 	@Override
-	public boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
+	public final boolean onCommand(CommandSender sender, org.bukkit.command.Command command, String label, String[] args) {
 		String subcommand = (args.length > 0) ? args[0] : "";
 
 		if (this.commands.containsKey(subcommand) && this.commands.get(subcommand).predicate(sender)) {
@@ -263,11 +263,11 @@ public abstract class Command implements TabExecutor {
 		return true;
 	}
 
-	private static String[] skipFirstElementOf(String[] args) {
+	private final static String[] skipFirstElementOf(String[] args) {
 		return Stream.of(args).skip(1).toArray(String[]::new);
 	}
 
-	public void register(JavaPlugin plugin) {
+	public final void register(JavaPlugin plugin) {
 		var command = plugin.getCommand(this.getName());
 
 		if (command == null) {
