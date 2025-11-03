@@ -187,18 +187,6 @@ public abstract class Command implements TabExecutor {
 		return this.availabilities.get(name).apply(sender);
 	}
 
-	final void execute(CommandSender sender, String[] arguments) {
-		if (sender == null) {
-			throw new IllegalArgumentException(COMMAND_SENDER_CANNOT_BE_NULL);
-		}
-
-		if (arguments == null) {
-			throw new IllegalArgumentException(ARGUMENTS_ARRAY_CANNOT_BE_NULL);
-		}
-
-		this.onCommand(sender, this.parser.parse(Arrays.asList(arguments)));
-	}
-
 	public boolean predicate(CommandSender sender) {
 		return true;
 	}
@@ -224,7 +212,8 @@ public abstract class Command implements TabExecutor {
 		String firstElement = args[0];
 
 		if (this.commands.containsKey(firstElement) && args.length > 1 && this.commands.get(firstElement).predicate(sender)) {
-			return this.commands.get(firstElement).getCompletition(sender, skipFirstElementOf(args));
+			return this.commands.get(firstElement).onTabComplete(sender, command, label, skipFirstElementOf(args));
+
 		}
 
 		List<String> completitions = new ArrayList<>();
@@ -249,13 +238,13 @@ public abstract class Command implements TabExecutor {
 		String subcommand = (args.length > 0) ? args[0] : "";
 
 		if (this.commands.containsKey(subcommand) && this.commands.get(subcommand).predicate(sender)) {
-			this.commands.get(subcommand).execute(sender, skipFirstElementOf(args));
+			this.commands.get(subcommand).onCommand(sender, command, label, skipFirstElementOf(args));
 
 			return true;
 		}
 
 		if (this.predicate(sender)) {
-			this.execute(sender, args);
+			this.onCommand(sender, this.parser.parse(Arrays.asList(args)));
 			
 			return true;
 		}

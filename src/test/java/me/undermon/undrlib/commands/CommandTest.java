@@ -175,17 +175,6 @@ class CommandTest {
 	}
 
 	@Test
-	void exceptionOnExecuteWhenSenderIsNull() {
-		assertThrows(IllegalArgumentException.class, () -> this.command.execute(null, new String[] {}));
-	}
-
-	@Test
-	void exceptionOnExecuteWhenArgumentsIsNull() {
-		assertThrows(IllegalArgumentException.class,
-			() -> this.command.execute(SENDER_DUMMY, null));
-	}
-
-	@Test
 	void exceptionGetCompletitionWhenSenderIsNull() {
 		assertThrows(IllegalArgumentException.class,
 			() -> this.command.getCompletition(null, new String[] {}));
