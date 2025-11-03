@@ -48,10 +48,6 @@ public abstract class Command implements TabExecutor {
 		return this.name;
 	}
 
-	protected final boolean hasParameter(String name) {
-		return this.parameters.has(name);
-	}
-
 	protected final void addPositional(String name, BiFunction<CommandSender, String, List<String>> suggester) {
 
 		if (name == null) {

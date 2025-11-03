@@ -1,9 +1,7 @@
 package me.undermon.undrlib.commands;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
 import java.util.function.BiFunction;
@@ -48,61 +46,6 @@ class CommandTest {
 	void returnsCorrectName() {
 		assertEquals(SUBCOMMAND_NAME, this.command.getName());
 	}
-
-	@Test
-	void doesNotHaveNotAddedParameter() {
-		assertFalse(this.command.hasParameter(FIRST_POSITIONAL));
-	}
-
-	@Test
-	void positionalIsPresentAfterAddingIt() {
-		this.command.addPositional(FIRST_POSITIONAL);
-		assertTrue(this.command.hasParameter(FIRST_POSITIONAL));
-	}
-
-	@Test
-	void positionalIsPresentAfterAddingIt2() {
-		this.command.addPositional(FIRST_POSITIONAL, NO_COMPLETITIONS);
-		assertTrue(this.command.hasParameter(FIRST_POSITIONAL));
-	}
-
-	@Test
-	void flagIsPresentAfterAddingIt() {
-		this.command.addFlag(FLAG_A);
-		assertTrue(this.command.hasParameter(FLAG_A));
-	}
-
-	@Test
-	void flagIsPresentAfterAddingIt2() {
-		this.command.addFlag(FLAG_A, ALWAYS_AVAILABLE);
-		assertTrue(this.command.hasParameter(FLAG_A));
-	}
-
-	@Test
-	void flagIsPresentAfterAddingIt3() {
-		this.command.addFlag(FLAG_A, NO_COMPLETITIONS);
-		assertTrue(this.command.hasParameter(FLAG_A));
-	}
-
-	@Test
-	void flagIsPresentAfterAddingIt4() {
-		this.command.addFlag(FLAG_A, NO_COMPLETITIONS, ALWAYS_AVAILABLE);
-		assertTrue(this.command.hasParameter(FLAG_A));
-	}
-
-
-	@Test
-	void switchIsPresentAfterAddingIt() {
-		this.command.addSwitch(SWITCH);
-		assertTrue(this.command.hasParameter(SWITCH));
-	}
-
-	@Test
-	void switchIsPresentAfterAddingIt2() {
-		this.command.addSwitch(SWITCH, ALWAYS_AVAILABLE);
-		assertTrue(this.command.hasParameter(SWITCH));
-	}
-
 
 	@Test
 	void exceptionWhenAddPositionalWithNullName() {
