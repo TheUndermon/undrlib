@@ -36,12 +36,19 @@ public abstract class Command implements TabExecutor {
 	private Map<String, Function<CommandSender, Boolean>> availabilities = new HashMap<>();
 	private static final BiFunction<CommandSender, String, List<String>> DEFAULT_AUTOCOMPLETER = (sender, arg) -> List.of();
 	private static final Function<CommandSender, Boolean> DEFAULT_AVAILABILITY = sender -> true;
+	private final Command defaultCommand;
 
 	protected Command(String name) {
+		this(name, null);
+	}
+
+	protected Command(String name, Command defaultCommand) {
 		if (name == null) {
 			throw new IllegalArgumentException("subcommand name cannot be null");
 		}
+
 		this.name = name;
+		this.defaultCommand = defaultCommand;
 	}
 
 	protected final String getName() {
@@ -209,10 +216,14 @@ public abstract class Command implements TabExecutor {
 
 		if (this.commands.containsKey(firstElement) && args.length > 1 && this.commands.get(firstElement).predicate(sender)) {
 			return this.commands.get(firstElement).onTabComplete(sender, command, label, skipFirstElementOf(args));
-
 		}
 
 		List<String> completitions = new ArrayList<>();
+
+		if (this.defaultCommand != null && this.defaultCommand.predicate(sender)) {
+			completitions.addAll(this.defaultCommand.getCompletition(sender, args));
+		}
+
 
 		completitions.addAll(this.getCompletition(sender, args));
 
@@ -236,6 +247,12 @@ public abstract class Command implements TabExecutor {
 		if (this.commands.containsKey(subcommand) && this.commands.get(subcommand).predicate(sender)) {
 			this.commands.get(subcommand).onCommand(sender, command, label, skipFirstElementOf(args));
 
+			return true;
+		}
+
+		if (this.defaultCommand != null && this.defaultCommand.predicate(sender)) {
+			this.defaultCommand.onCommand(sender, command, label, args);
+			
 			return true;
 		}
 
